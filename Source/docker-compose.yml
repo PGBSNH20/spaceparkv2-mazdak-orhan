@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  spaceparkapi:
+    image: ${DOCKER_REGISTRY-}spaceparkapi
+    build:
+      context: .
+      dockerfile: SpaceparkAPI/Dockerfile
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql-server-container_name
+    hostname: mssql-server-hostname
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "#Hejsan123"
+      MSSQL_PID: Express
+    ports:
+      - "41433:1433"
+    volumes:
+      - spaceparkapi-data:/var/opt/mysql
+
+ 
+
+volumes:
+  spaceparkapi-data:
+    driver: local
