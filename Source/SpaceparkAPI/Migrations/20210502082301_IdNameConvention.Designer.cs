@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceParkAPI.Data;
 
 namespace SpaceparkAPI.Migrations
 {
     [DbContext(typeof(SpaceParkContext))]
-    partial class SpaceParkContextModelSnapshot : ModelSnapshot
+    [Migration("20210502082301_IdNameConvention")]
+    partial class IdNameConvention
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace SpaceparkAPI.Migrations
 
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("SpacePortId")
-                        .HasColumnType("int");
 
                     b.Property<string>("StarShip")
                         .IsRequired()
@@ -50,8 +49,6 @@ namespace SpaceparkAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpacePortId");
-
                     b.ToTable("Parkings");
                 });
 
@@ -68,20 +65,6 @@ namespace SpaceparkAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SpacePorts");
-                });
-
-            modelBuilder.Entity("SpaceparkAPI.Models.Parking", b =>
-                {
-                    b.HasOne("SpaceparkAPI.Models.SpacePort", null)
-                        .WithMany("Parkings")
-                        .HasForeignKey("SpacePortId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpaceparkAPI.Models.SpacePort", b =>
-                {
-                    b.Navigation("Parkings");
                 });
 #pragma warning restore 612, 618
         }

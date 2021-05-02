@@ -9,7 +9,6 @@ namespace SpaceparkAPI.Models
 {
     public class Parking
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public DateTime StartTime { get; set; }
@@ -20,5 +19,6 @@ namespace SpaceparkAPI.Models
         public string StarShip { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal? TotalSum { get; set; }
+        public int SpacePortId { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpaceparkAPI.Models;
 using SpaceParkAPI.Data;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,28 @@ namespace SpaceparkAPI.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpPost]
-        public IActionResult Post()
+        [HttpGet("[action]")]
+        public IActionResult GetParkings()
         {
+            var parkings = from parking in _dbContext.Parkings
+                           join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
+                           select new
+                           {
+                               Id = parking.Id,
+                               SpacePort = spaceport.Name,
+                               Traveller = parking.Traveller,
+                               StartTime = parking.StartTime
+                           };
+            return Ok(parkings);
+        }
 
+        [HttpPost("[action]")]
+        public IActionResult AddParking([FromBody]Parking parkingObj)
+        {
+            parkingObj.StartTime = DateTime.Now;
+            _dbContext.Parkings.Add(parkingObj);
+            _dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
         }
     }
 }
