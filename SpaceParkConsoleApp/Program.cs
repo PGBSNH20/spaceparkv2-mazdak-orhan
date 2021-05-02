@@ -16,7 +16,7 @@ namespace SpaceParkConsoleApp
 
             Console.WriteLine("Welcome dear traveller!\n");
 
-            var showSpacePort = GetSpaceport.CreateSpaceportAsync();
+            //var showSpacePort = GetSpaceport.CreateSpaceportAsync();
         }
     }
 }

@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpaceparkAPI.SWAPI
+namespace SpaceparkAPI.Swapi
 {
     public class Fetch
     {
         private const string baseURL = "http://swapi.dev/api/";
 
         //Fetch people from API
-        public static async Task<List<Person>> People(string input)
+        public static async Task<List<Person>> People()
         {
             var client = new RestClient(baseURL);
-            string requestUrl = $"http://swapi.dev/api/people/?search={input}";
+            string requestUrl = $"http://swapi.dev/api/people/";
             APIResponseTraveller response;
             List<Person> persons = new List<Person>();
 

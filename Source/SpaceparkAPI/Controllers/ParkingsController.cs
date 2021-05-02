@@ -55,12 +55,40 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult AddParking([FromBody]Parking parkingObj)
+        public async Task<IActionResult> AddParking([FromBody] Parking parkingObj)
         {
-            parkingObj.StartTime = DateTime.Now;
-            _dbContext.Parkings.Add(parkingObj);
-            _dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
+            var personSwapi = Swapi.Fetch.People();
+            await personSwapi;
+
+            string travellerName = "";
+            int travellerHasStarship = 0;
+
+            var travellerApiMatch = personSwapi.Result.Where(x => x.Name.ToLower() == parkingObj.Traveller.ToLower()).FirstOrDefault();
+
+            if (travellerApiMatch != null)
+            {
+                travellerName = travellerApiMatch.Name.ToLower();
+                //parkingObj.Traveller.ToLower();
+                travellerHasStarship = travellerApiMatch.Starships.Count;
+            }
+
+            if (travellerName == null || travellerHasStarship == 0)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+            if (travellerName == parkingObj.Traveller.ToLower() && travellerHasStarship > 0)
+            {
+                //var findTraveller = _dbContext.Parkings.Find(parkingObj.Traveller);
+                parkingObj.Traveller = parkingObj.Traveller.ToLower();
+                parkingObj.StartTime = DateTime.Now;
+                _dbContext.Parkings.Add(parkingObj);
+                _dbContext.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            else
+            {
+                return NotFound("We could not find a starwars character by that name");
+            }
         }
     }
 }
