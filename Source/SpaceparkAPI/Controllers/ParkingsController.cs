@@ -20,16 +20,36 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult GetParkings()
+        public IActionResult GetParkingHistory()
         {
             var parkings = from parking in _dbContext.Parkings
                            join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
+                           where parking.EndTime != null
                            select new
                            {
                                Id = parking.Id,
                                SpacePort = spaceport.Name,
                                Traveller = parking.Traveller,
-                               StartTime = parking.StartTime
+                               Starship = parking.StarShip,
+                               StartTime = parking.StartTime,
+                               EndTime = parking.EndTime
+                           };
+            return Ok(parkings);
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult GetActiveParkings()
+        {
+            var parkings = from parking in _dbContext.Parkings
+                           join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
+                           where parking.EndTime == null
+                           select new
+                           {
+                               Id = parking.Id,
+                               SpacePort = spaceport.Name,
+                               Traveller = parking.Traveller,
+                               Starship = parking.StarShip,
+                               StartTime = parking.StartTime,
                            };
             return Ok(parkings);
         }
