@@ -4,6 +4,7 @@ using SpaceparkAPI.Models;
 using SpaceParkAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,8 +58,20 @@ namespace SpaceparkAPI.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> AddParking([FromBody] Parking parkingObj)
         {
+            //Added this line to Parse double values to not mix "." and ","
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
+            //Fetch starwars characters from Swapi
             var personSwapi = Swapi.Fetch.People();
             await personSwapi;
+
+            //Fetch starwars starships from Swapi
+            var starshipSwapi = Swapi.Fetch.Starships();
+            await starshipSwapi;
+
+            //Select the starship input name.
+            var starshipApiMatch = starshipSwapi.Result.Where(x => x.Name.ToLower() == parkingObj.StarShip.ToLower()).FirstOrDefault();
+            var starshipLength = double.TryParse(starshipApiMatch.Length, out double result);
 
             string travellerName = "";
             int travellerHasStarship = 0;
@@ -68,7 +81,6 @@ namespace SpaceparkAPI.Controllers
             if (travellerApiMatch != null)
             {
                 travellerName = travellerApiMatch.Name.ToLower();
-                //parkingObj.Traveller.ToLower();
                 travellerHasStarship = travellerApiMatch.Starships.Count;
             }
 
@@ -76,10 +88,10 @@ namespace SpaceparkAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound);
             }
-            if (travellerName == parkingObj.Traveller.ToLower() && travellerHasStarship > 0)
+            if (travellerName == parkingObj.Traveller.ToLower() && travellerHasStarship > 0 && result < 15)
             {
-                //var findTraveller = _dbContext.Parkings.Find(parkingObj.Traveller);
                 parkingObj.Traveller = parkingObj.Traveller.ToLower();
+                parkingObj.StarShip = parkingObj.StarShip.ToLower();
                 parkingObj.StartTime = DateTime.Now;
                 _dbContext.Parkings.Add(parkingObj);
                 _dbContext.SaveChanges();
