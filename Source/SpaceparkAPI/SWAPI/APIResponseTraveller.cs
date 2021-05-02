@@ -8,8 +8,8 @@ namespace SpaceparkAPI.SWAPI
 {
     public class APIResponseTraveller
     {
-        public int Count { get; set; }
-        public string Next { get; set; }
-        public List<Person> Results { get; set; }
+        //public int Count { get; set; }
+        //public string Next { get; set; }
+        //public List<Person> Results { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace SpaceParkAPI.Data
         public SpaceParkContext(DbContextOptions<SpaceParkContext> options) : base(options)
         {
         }
+
         public DbSet<Parking> Parkings { get; set; }
         public DbSet<SpacePort> SpacePorts { get; set; }
 

@@ -26,5 +26,17 @@ namespace SpaceparkAPI.Controllers
             _dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetSpacePorts()
+        {
+            var spaceports = from spaceport in _dbContext.SpacePorts
+                           select new
+                           {
+                               Id = spaceport.Id,
+                               Name = spaceport.Name
+                           };
+            return Ok(spaceports);
+        }
     }
 }

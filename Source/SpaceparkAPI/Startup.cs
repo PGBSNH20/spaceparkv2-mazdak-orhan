@@ -31,6 +31,7 @@ namespace SpaceparkAPI
 
             services.AddControllers();
             services.AddMvc().AddXmlSerializerFormatters();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpaceparkAPI", Version = "v1" });
