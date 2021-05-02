@@ -10,7 +10,7 @@ namespace SpaceparkAPI.Models
     public class Parking
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }

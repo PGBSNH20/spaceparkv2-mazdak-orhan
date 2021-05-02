@@ -18,7 +18,10 @@ namespace SpaceparkAPI.Controllers
             _dbContext = dbContext;
         }
 
-        //[HttpPost]
-        //public IActionResult Post
+        [HttpPost]
+        public IActionResult Post()
+        {
+
+        }
     }
 }
