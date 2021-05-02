@@ -73,6 +73,8 @@ namespace SpaceparkAPI.Controllers
             var starshipApiMatch = starshipSwapi.Result.Where(x => x.Name.ToLower() == parkingObj.StarShip.ToLower()).FirstOrDefault();
             var starshipLength = double.TryParse(starshipApiMatch.Length, out double result);
 
+            //EDIT FirstOrDefault ovan så att vi kan välja att skriva in ett starship namn, därefter matcha det och kolla så att det finns i Swapi.
+
             string travellerName = "";
             int travellerHasStarship = 0;
 
