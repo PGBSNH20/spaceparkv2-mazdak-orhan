@@ -34,7 +34,8 @@ namespace SpaceparkAPI.Controllers
                                Traveller = parking.Traveller,
                                Starship = parking.StarShip,
                                StartTime = parking.StartTime,
-                               EndTime = parking.EndTime
+                               EndTime = parking.EndTime,
+                               TotalSum = parking.TotalSum
                            };
             return Ok(parkings);
         }
@@ -129,7 +130,21 @@ namespace SpaceparkAPI.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("[action]/{traveller}")]
+        public IActionResult EndParking(string traveller)
+        {
+            var findActiveParking = _dbContext.Parkings.SingleOrDefault(x => x.Traveller == traveller && x.EndTime == null);
+
+            if(findActiveParking != null)
+            {
+                findActiveParking.EndTime = DateTime.Now;
+                var duration = findActiveParking.EndTime - findActiveParking.StartTime;
+                findActiveParking.TotalSum = Math.Round(Convert.ToDecimal(duration.Value.TotalMinutes) * 10m, 2);
+                _dbContext.SaveChanges();
+                return Ok($"Parking ended. Total cost: {findActiveParking.TotalSum}");
+            }
+            return NotFound($"We can't find any active parkings for {traveller}");
+        } 
 
         [HttpDelete("[action]")]
         public IActionResult DeleteParking(int id)
