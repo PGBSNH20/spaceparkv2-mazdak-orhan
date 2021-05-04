@@ -19,23 +19,54 @@ namespace SpaceparkAPI.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpPost("[action]/{name}")]
-        public IActionResult AddNewSpacePort(string name)
+        [HttpGet("[action]")]
+        public IActionResult GetParkingHistoryInSpaceport(int spaceportId)
         {
-            var spacePort = new SpacePort()
-            {
-                Name = name
-            };
+            var parkings = from parking in _dbContext.Parkings
+                           join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
+                           where parking.EndTime != null
+                           select new
+                           {
+                               Id = parking.Id,
+                               spacePortId = spaceport.Id,
+                               SpacePort = spaceport.Name,
+                               Traveller = parking.Traveller,
+                               Starship = parking.StarShip,
+                               StartTime = parking.StartTime,
+                               EndTime = parking.EndTime,
+                               TotalSum = parking.TotalSum
+                           };
+            var spaceportById = parkings.Where(x => x.spacePortId == spaceportId);
 
-            var findExistingSpacePort = _dbContext.SpacePorts.Any(x => x.Name == name);
-            if (findExistingSpacePort)
+            if (spaceportById == null || spaceportById.Count() == 0)
             {
-                return BadRequest($"There is already and existing spaceport named: {name}, try with another one.");
+                return NotFound("We can't find any spaceports matching this ID");
             }
+            return Ok(parkings.Where(x => x.spacePortId == spaceportId).OrderBy(x => x.Traveller));
+        }
 
-            _dbContext.Add(spacePort);
-            _dbContext.SaveChanges();
-            return Ok($"'{name}' spaceport has been created");
+        [HttpGet("[action]")]
+        public IActionResult GetActiveParkingsInSpacePort(int spaceportId)
+        {
+            var parkings = from parking in _dbContext.Parkings
+                           join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
+                           where parking.EndTime == null
+                           select new
+                           {
+                               Id = parking.Id,
+                               spacePortId = spaceport.Id,
+                               SpacePort = spaceport.Name,
+                               Traveller = parking.Traveller,
+                               Starship = parking.StarShip,
+                               StartTime = parking.StartTime
+                           };
+            var spaceportById = parkings.Where(x => x.spacePortId == spaceportId);
+
+            if (spaceportById == null || spaceportById.Count() == 0)
+            {
+                return NotFound("We can't find any spaceports matching this ID");
+            }
+            return Ok(parkings.Where(x => x.spacePortId == spaceportId).OrderBy(x => x.StartTime));
         }
 
         [HttpGet("[action]")]
@@ -59,13 +90,33 @@ namespace SpaceparkAPI.Controllers
                 return BadRequest("We can't find the requested spaceport.");
             }
 
-            var spaceports = (from spaceport in _dbContext.SpacePorts where spaceport.Name == name
-                             select new
-                             {
-                                 Id = spaceport.Id,
-                                 Name = spaceport.Name
-                             }).FirstOrDefault();
+            var spaceports = (from spaceport in _dbContext.SpacePorts
+                              where spaceport.Name == name
+                              select new
+                              {
+                                  Id = spaceport.Id,
+                                  Name = spaceport.Name
+                              }).FirstOrDefault();
             return Ok(spaceports);
+        }
+
+        [HttpPost("[action]/{name}")]
+        public IActionResult AddNewSpacePort(string name)
+        {
+            var spacePort = new SpacePort()
+            {
+                Name = name
+            };
+
+            var findExistingSpacePort = _dbContext.SpacePorts.Any(x => x.Name == name);
+            if (findExistingSpacePort)
+            {
+                return BadRequest($"There is already and existing spaceport named: {name}, try with another one.");
+            }
+
+            _dbContext.Add(spacePort);
+            _dbContext.SaveChanges();
+            return Ok($"'{name}' spaceport has been created");
         }
 
         [HttpPut("[action]/{name}")]
@@ -84,6 +135,22 @@ namespace SpaceparkAPI.Controllers
                 return NotFound($"We can't find any spaceports named: {name}");
             }
 
+        }
+
+        [HttpDelete("[action]")]
+        public IActionResult DeleteSpaceport(int id)
+        {
+            var spaceport = _dbContext.SpacePorts.Find(id);
+            if (spaceport == null)
+            {
+                return NotFound("We cannot find any parking matching this ID.");
+            }
+            else
+            {
+                _dbContext.SpacePorts.Remove(spaceport);
+                _dbContext.SaveChanges();
+                return Ok("Spaceport deleted with all its historical and active parkings.");
+            }
         }
     }
 }

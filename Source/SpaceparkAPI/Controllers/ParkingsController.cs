@@ -21,8 +21,8 @@ namespace SpaceparkAPI.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("[action]")]
-        public IActionResult GetParkingHistory()
+        [HttpGet("[action]/{traveller}")]
+        public IActionResult GetTravellerHistoricalParkings(string traveller)
         {
             var parkings = from parking in _dbContext.Parkings
                            join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
@@ -35,13 +35,19 @@ namespace SpaceparkAPI.Controllers
                                Starship = parking.StarShip,
                                StartTime = parking.StartTime,
                                EndTime = parking.EndTime,
-                               TotalSum = parking.TotalSum
+                               Totalsum = parking.TotalSum
                            };
-            return Ok(parkings);
+            var historicalParking = parkings.Where(x => x.Traveller == traveller.ToLower());
+
+            if (historicalParking == null || historicalParking.Count() == 0)
+            {
+                return NotFound($"We can't find any historical parkings for {traveller.ToLower()}");
+            }
+            return Ok(parkings.Where(x => x.Traveller == traveller.ToLower()));
         }
 
-        [HttpGet("[action]")]
-        public IActionResult GetActiveParkings()
+        [HttpGet("[action]/{traveller}")]
+        public IActionResult GetTravellerActiveParking(string traveller)
         {
             var parkings = from parking in _dbContext.Parkings
                            join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
@@ -54,8 +60,13 @@ namespace SpaceparkAPI.Controllers
                                Starship = parking.StarShip,
                                StartTime = parking.StartTime,
                            };
+            var ongoingParking = parkings.Where(x => x.Traveller == traveller.ToLower());
 
-            return Ok(parkings);
+            if(ongoingParking == null || ongoingParking.Count() == 0)
+            {
+                return NotFound($"We can't find any active parkings for {traveller.ToLower()}");
+            }
+            return Ok(parkings.Where(x => x.Traveller == traveller.ToLower()).FirstOrDefault());
         }
 
         [HttpPost("[action]/{traveller}/{starship}/{spaceportId}")]
