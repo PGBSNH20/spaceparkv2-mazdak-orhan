@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpaceparkAPI.Models;
 using SpaceparkAPI.Objects;
 using SpaceParkAPI.Data;
@@ -47,7 +48,7 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpGet("[action]/{traveller}")]
-        public IActionResult GetTravellerActiveParking(string traveller)
+        public async Task<IActionResult> GetTravellerActiveParking(string traveller)
         {
             var parkings = from parking in _dbContext.Parkings
                            join spaceport in _dbContext.SpacePorts on parking.SpacePortId equals spaceport.Id
@@ -66,7 +67,7 @@ namespace SpaceparkAPI.Controllers
             {
                 return NotFound($"We can't find any active parkings for {traveller.ToLower()}");
             }
-            return Ok(parkings.Where(x => x.Traveller == traveller.ToLower()).FirstOrDefault());
+            return Ok(await parkings.Where(x => x.Traveller == traveller.ToLower()).FirstOrDefaultAsync());
         }
 
         [HttpPost("[action]/{traveller}/{starship}/{spaceportId}")]
@@ -83,20 +84,18 @@ namespace SpaceparkAPI.Controllers
             };
 
             //Fetch starwars characters from Swapi
-            var personSwapi = Swapi.Fetch.People();
-            await personSwapi;
+            var personSwapi = await Swapi.Fetch.People();
 
             //Fetch starwars starships from Swapi
-            var starshipSwapi = Swapi.Fetch.Starships();
-            await starshipSwapi;
+            var starshipSwapi = await Swapi.Fetch.Starships();
 
             //We have this variable set to 0 if we cant parse starshipLength variable below. 0 acts therefore as a null value.
             double result = 0;
 
-            var travellerApiMatch = personSwapi.Result.Where(x => x.Name.ToLower() == parkingObj.Traveller.ToLower()).FirstOrDefault();
+            var travellerApiMatch = personSwapi.Where(x => x.Name.ToLower() == parkingObj.Traveller.ToLower()).FirstOrDefault();
             if (travellerApiMatch != null)
             {
-                var starships = starshipSwapi.Result.Join(travellerApiMatch.Starships, ssS => ssS.URL, tAM => tAM, (ssS, tAM) => ssS).ToList();
+                var starships = starshipSwapi.Join(travellerApiMatch.Starships, ssS => ssS.URL, tAM => tAM, (ssS, tAM) => ssS).ToList();
                 var starshipApiMatch = starships.Where(x => x.Name.ToLower() == parkingObj.StarShip.ToLower()).FirstOrDefault();
                 if (starshipApiMatch != null)
                 {
@@ -104,15 +103,15 @@ namespace SpaceparkAPI.Controllers
                 }
 
                 //Check if traveller already has an active parking. if endtime == null then it is not active.
-                var findActiveParking = _dbContext.Parkings.Any(x => x.Traveller == parkingObj.Traveller && x.EndTime == null);
+                var findActiveParking = await _dbContext.Parkings.AnyAsync(x => x.Traveller == parkingObj.Traveller && x.EndTime == null);
 
                 if (travellerApiMatch.Name != null && result < 15 && result > 0 && !findActiveParking)
                 {
                     parkingObj.Traveller = parkingObj.Traveller.ToLower();
                     parkingObj.StarShip = parkingObj.StarShip.ToLower();
                     parkingObj.StartTime = DateTime.Now;
-                    _dbContext.Parkings.Add(parkingObj);
-                    _dbContext.SaveChanges();
+                    await _dbContext.Parkings.AddAsync(parkingObj);
+                    await _dbContext.SaveChangesAsync();
                     return StatusCode(StatusCodes.Status201Created);
                 }
 
@@ -142,25 +141,25 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpPut("[action]/{traveller}")]
-        public IActionResult EndParking(string traveller)
+        public async Task<IActionResult> EndParking(string traveller)
         {
-            var findActiveParking = _dbContext.Parkings.SingleOrDefault(x => x.Traveller == traveller && x.EndTime == null);
+            var findActiveParking = await _dbContext.Parkings.SingleOrDefaultAsync(x => x.Traveller == traveller && x.EndTime == null);
 
             if(findActiveParking != null)
             {
                 findActiveParking.EndTime = DateTime.Now;
                 var duration = findActiveParking.EndTime - findActiveParking.StartTime;
                 findActiveParking.TotalSum = Math.Round(Convert.ToDecimal(duration.Value.TotalMinutes) * 10m, 2);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok($"Parking ended. Total cost: {findActiveParking.TotalSum}");
             }
             return NotFound($"We can't find any active parkings for {traveller}");
         } 
 
         [HttpDelete("[action]")]
-        public IActionResult DeleteParking(int id)
+        public async Task<IActionResult> DeleteParking(int id)
         {
-            var parking = _dbContext.Parkings.Find(id);
+            var parking = await _dbContext.Parkings.FindAsync(id);
             if (parking == null)
             {
                 return NotFound("We cannot find any parking matching this ID.");
@@ -168,7 +167,7 @@ namespace SpaceparkAPI.Controllers
             else
             {
                 _dbContext.Parkings.Remove(parking);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok("Parking deleted.");
             }
         }

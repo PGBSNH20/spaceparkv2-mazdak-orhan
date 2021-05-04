@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpaceparkAPI.Models;
 using SpaceParkAPI.Data;
 using System;
@@ -82,52 +83,52 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpGet("[action]/{name}")]
-        public IActionResult GetSpacePortByName(string name)
+        public async Task<IActionResult> GetSpacePortByName(string name)
         {
-            var findExistingSpacePort = _dbContext.SpacePorts.SingleOrDefault(x => x.Name == name);
+            var findExistingSpacePort = await _dbContext.SpacePorts.SingleOrDefaultAsync(x => x.Name == name);
             if (_dbContext.SpacePorts == null || findExistingSpacePort == null)
             {
                 return BadRequest("We can't find the requested spaceport.");
             }
 
-            var spaceports = (from spaceport in _dbContext.SpacePorts
+            var spaceports = await (from spaceport in _dbContext.SpacePorts
                               where spaceport.Name == name
                               select new
                               {
                                   Id = spaceport.Id,
                                   Name = spaceport.Name
-                              }).FirstOrDefault();
+                              }).FirstOrDefaultAsync();
             return Ok(spaceports);
         }
 
         [HttpPost("[action]/{name}")]
-        public IActionResult AddNewSpacePort(string name)
+        public async Task<IActionResult> AddNewSpacePort(string name)
         {
             var spacePort = new SpacePort()
             {
                 Name = name
             };
 
-            var findExistingSpacePort = _dbContext.SpacePorts.Any(x => x.Name == name);
+            var findExistingSpacePort = await _dbContext.SpacePorts.AnyAsync(x => x.Name == name);
             if (findExistingSpacePort)
             {
                 return BadRequest($"There is already and existing spaceport named: {name}, try with another one.");
             }
 
-            _dbContext.Add(spacePort);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(spacePort);
+            await _dbContext.SaveChangesAsync();
             return Ok($"'{name}' spaceport has been created");
         }
 
         [HttpPut("[action]/{name}")]
-        public IActionResult UpdateSpacePort(string name, string newName)
+        public async Task<IActionResult> UpdateSpacePort(string name, string newName)
         {
-            var findSpacePort = _dbContext.SpacePorts.SingleOrDefault(x => x.Name == name);
+            var findSpacePort = await _dbContext.SpacePorts.SingleOrDefaultAsync(x => x.Name == name);
 
             if (findSpacePort != null)
             {
                 findSpacePort.Name = newName;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok($"Spaceport name updated to {newName}");
             }
             else
@@ -138,9 +139,9 @@ namespace SpaceparkAPI.Controllers
         }
 
         [HttpDelete("[action]")]
-        public IActionResult DeleteSpaceport(int id)
+        public async Task<IActionResult> DeleteSpaceport(int id)
         {
-            var spaceport = _dbContext.SpacePorts.Find(id);
+            var spaceport = await _dbContext.SpacePorts.FindAsync(id);
             if (spaceport == null)
             {
                 return NotFound("We cannot find any parking matching this ID.");
@@ -148,7 +149,7 @@ namespace SpaceparkAPI.Controllers
             else
             {
                 _dbContext.SpacePorts.Remove(spaceport);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return Ok("Spaceport deleted with all its historical and active parkings.");
             }
         }
