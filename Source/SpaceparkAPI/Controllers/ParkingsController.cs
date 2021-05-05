@@ -117,7 +117,7 @@ namespace SpaceparkAPI.Controllers
                     parkingObj.StartTime = DateTime.Now;
                     await _dbContext.Parkings.AddAsync(parkingObj);
                     await _dbContext.SaveChangesAsync();
-                    return StatusCode(StatusCodes.Status201Created);
+                    return Ok($"{parkingObj.Traveller} has now parked successfully");
                 }
 
                 if (findActiveParking)
