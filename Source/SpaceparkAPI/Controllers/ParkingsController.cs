@@ -77,6 +77,10 @@ namespace SpaceparkAPI.Controllers
             //Added this line to Parse double values to not mix "." and ","
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
+            if(_dbContext.SpacePorts == null || _dbContext.SpacePorts.Count() == 0)
+            {
+                return BadRequest("There is no active spaceports to add a parking");
+            }
             Parking parkingObj = new()
             {
                 Traveller = traveller,

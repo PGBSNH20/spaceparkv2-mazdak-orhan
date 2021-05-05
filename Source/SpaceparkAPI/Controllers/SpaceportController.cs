@@ -73,6 +73,10 @@ namespace SpaceparkAPI.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAllSpacePorts()
         {
+            if(_dbContext.SpacePorts == null ||_dbContext.SpacePorts.Count() == 0)
+            {
+                return NotFound("We can't find any currently active spaceports.");
+            }
             var spaceports = from spaceport in _dbContext.SpacePorts
                              select new
                              {
