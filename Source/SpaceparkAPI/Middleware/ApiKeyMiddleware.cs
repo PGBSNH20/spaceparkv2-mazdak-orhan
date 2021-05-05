@@ -16,7 +16,7 @@ namespace SpaceparkAPI.Middleware
             if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
             {
                 context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Api Key was not provided. (Using ApiKeyMiddleware) ");
+                await context.Response.WriteAsync("Api Key was not provided. (Using ApiKeyMiddleware)");
                 return;
             }
             await _next(context);
