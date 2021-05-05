@@ -29,7 +29,7 @@ namespace SpaceparkAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpaceparkAPI", Version = "v1" });
 
-                c.OperationFilter<HeaderFilter>();
+                c.OperationFilter<HeaderFilter>(); //Adding a header section in swagger
             });
             services.AddDbContext<SpaceParkContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -48,7 +48,7 @@ namespace SpaceparkAPI
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<ApiKeyMiddleware>(); //using ApiKeyMiddleware to evaluate authentication
 
             app.UseEndpoints(endpoints =>
             {
