@@ -28,7 +28,6 @@ namespace SpaceparkAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpaceparkAPI", Version = "v1" });
-
                 c.OperationFilter<HeaderFilter>(); //Adding a header section in swagger
             });
             services.AddDbContext<SpaceParkContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -40,7 +39,6 @@ namespace SpaceparkAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceparkAPI v1"));
             }
