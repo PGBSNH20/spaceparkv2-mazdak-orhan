@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpaceparkAPI.Attributes;
 using SpaceparkAPI.Models;
 using SpaceParkAPI.Data;
 using System;
@@ -12,6 +13,7 @@ namespace SpaceparkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKeyAdmin] //See appsettings.json for api key 
     public class SpaceportController : ControllerBase
     {
         private SpaceParkContext _dbContext;
@@ -151,6 +153,22 @@ namespace SpaceparkAPI.Controllers
                 _dbContext.SpacePorts.Remove(spaceport);
                 await _dbContext.SaveChangesAsync();
                 return Ok("Spaceport deleted with all its historical and active parkings.");
+            }
+        }
+
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> DeleteParking(int id)
+        {
+            var parking = await _dbContext.Parkings.FindAsync(id);
+            if (parking == null)
+            {
+                return NotFound("We cannot find any parking matching this ID.");
+            }
+            else
+            {
+                _dbContext.Parkings.Remove(parking);
+                await _dbContext.SaveChangesAsync();
+                return Ok("Parking deleted.");
             }
         }
     }
