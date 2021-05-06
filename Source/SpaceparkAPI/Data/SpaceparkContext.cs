@@ -15,8 +15,8 @@ namespace SpaceParkAPI.Data
         {
         }
 
-        public DbSet<Parking> Parkings { get; set; }
-        public DbSet<SpacePort> SpacePorts { get; set; }
+        public virtual DbSet<Parking> Parkings { get; set; }
+        public virtual DbSet<SpacePort> SpacePorts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
