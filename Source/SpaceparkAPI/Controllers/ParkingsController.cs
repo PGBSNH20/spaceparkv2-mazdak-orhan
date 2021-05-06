@@ -148,7 +148,7 @@ namespace SpaceparkAPI.Controllers
         [HttpPut("[action]/{traveller}")]
         public async Task<IActionResult> EndParking(string traveller)
         {
-            var findActiveParking = await _dbContext.Parkings.SingleOrDefaultAsync(x => x.Traveller == traveller && x.EndTime == null);
+            var findActiveParking = await _dbContext.Parkings.SingleOrDefaultAsync(x => x.Traveller == traveller.ToLower() && x.EndTime == null);
 
             if(findActiveParking != null)
             {
