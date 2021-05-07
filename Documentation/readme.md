@@ -1,5 +1,7 @@
 ***Some tools we used for this project***
 
+- Visual Studio 2019
+
 **NuGet packages**
 - coverlet.collector
 - EntityFrameworkCoreMock.Moq
