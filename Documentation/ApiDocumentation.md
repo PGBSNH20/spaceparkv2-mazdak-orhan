@@ -14,15 +14,19 @@
 - The API will only work correctly if you create a Spaceport under the Spaceport section. Otherwise, if we do not do this as a FIRST STEP when using the API, we will get alot of BadRequests or NotFound responses while trying to work with the full API.
 - Start with POSTING a Spaceport.
 ![image](Documentation/CreateSpaceport.png)
-- When you have successfully created a spaceport, then it should be posted into the database which we run inside a docker container.
-- Next step is to add a traveller and his/hers spaceship that is less than 15m long
-- At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section.
+- When you have successfully created a spaceport, then it should be added into the database which we run inside a docker container.
+- Next step is to add a traveller and his/hers spaceship that is less than 15m long. It should look like this. If you need to get the Id for Spaceport, then there is a GET method inside Spaceport section where you can find the ID of ALL listed Spaceports:
+![image](Documentation/GetAllSpaceports.png)
+- Once we know the ID we can add a new Parking into whichever spaceport we want to. But we have to do it by entering the Spaceport ID which you can find on the image above.
+![image](Documentation/AddParking.png)
+- At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section. Go ahead and test the API.
+- **BE AWARE** If you choose to delete a Spaceport, then all historical and active parkings that are connected to that Spaceport will be deleted aswell.
+
 ---
 
-3. As you can see, we have two different categories: Parkings and Spaceport. Parkings is used for users who wants to park their vehicle at a spaceport. To be able to do that, we will check and make API calls from [Starwars Api](https://swapi.dev/) to check: 
+-  API calls are from [Starwars Api](https://swapi.dev/) to check: 
 -  1. If it is a starwars character we are trying to park with
 -  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from StarWars API above)
 -  3. If we pass both conditions above then we check if the selected starship the user wants to park is less than 15m (as we only allow starships below 15m to park).
 To get more indepth details you can check ParkingsController.cs file here: [Controller folder (Repo)](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/tree/Dev/Source/SpaceparkAPI/Controllers).
 
-4. Within the Parking API the traveller should also be able to get his current active parking or Historical parkings by entering his full name into the field. **Important**: When it comes to the Parkings API we always need to provide a ApiKeyUser, for all methods within the Parkings section we will provide user api key which can be found here: [API Keys](Source/SpaceparkAPI/appsettings.json).
