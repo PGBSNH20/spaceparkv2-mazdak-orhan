@@ -1,3 +1,26 @@
+***Some tools that we used for this project***
+
+**NuGet packages**
+- coverlet.collector
+- EntityFrameworkCoreMock.Moq
+- Microsoft.AspNetCore.Authentication.Core
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.NET.Test.Sdk
+- Microsoft.VisualStudio.Web.CodeGeneration.Design
+- Moq.EntityFrameworkCore
+- RestSharp
+- Swashbuckle.AspNetCore
+- xunit
+- xunit.runner.visualstudio
+
+**Database**
+- MSSQL
+
+**Other tools**
+- Browser, such as Google Chrome to display our API
 
 **April 30 2021**
 
