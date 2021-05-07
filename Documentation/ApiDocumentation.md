@@ -4,5 +4,5 @@
 
 2. Now we are ready to run the program. Run the program in your IDE (Visual studio). Since we have configured setup for Swagger there is no need to manually work with localhost URL because Swagger does that for us. So when you have done these steps, your browser should look something like this:
 
-![image]()
+![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/Swagger.png)
 
