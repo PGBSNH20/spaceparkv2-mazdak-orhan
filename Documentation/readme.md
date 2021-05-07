@@ -43,6 +43,7 @@
 
 **May 3 2021**
 
-- Created som new GET/POST methods for our API and also included some conditions inside our API methods in order to make them work properly. 
-- Also included some new methods in form of PUT and DELETE, so that we can update or delete the existing data. We used Linq to join the tables and select the right object in order to either delete or update the specific data. 
-- 
+- Created som new GET, POST and PUT methods for spaceports and also included some conditions inside our these API methods in order to make them work properly. 
+- Also included a DELETE method, so that we can delete the existing data. 
+-  We used Linq to join the tables and select the right object in order to either delete, update or select the desired data.
+-  When a user include, update or delete a desired data the result will afterwards be implemented inside the SQL database and displayed in our API.
