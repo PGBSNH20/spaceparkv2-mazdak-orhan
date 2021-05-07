@@ -13,12 +13,12 @@
 - Check this file for authentication passwords (User and Admin): [API Keys](Source/SpaceparkAPI/appsettings.json)
 - The API will only work correctly if you create a Spaceport under the Spaceport section. Otherwise, if we do not do this as a FIRST STEP when using the API, we will get alot of BadRequests or NotFound responses while trying to work with the full API.
 - Start with POSTING a Spaceport.
-![image](Documentation/CreateSpaceport.png)
+![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/CreateSpaceport.png)
 - When you have successfully created a spaceport, then it should be added into the database which we run inside a docker container.
 - Next step is to add a traveller and his/hers spaceship that is less than 15m long. It should look like this. If you need to get the Id for Spaceport, then there is a GET method inside Spaceport section where you can find the ID of ALL listed Spaceports:
-![image](Documentation/GetAllSpaceports.png)
+![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/GetAllSpaceports.png)
 - Once we know the ID we can add a new Parking into whichever spaceport we want to. But we have to do it by entering the Spaceport ID which you can find on the image above.
-![image](Documentation/AddParking.png)
+![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/AddParking.png)
 - At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section. Go ahead and test the API.
 - **BE AWARE** If you choose to delete a Spaceport, then all historical and active parkings that are connected to that Spaceport will be deleted aswell.
 
