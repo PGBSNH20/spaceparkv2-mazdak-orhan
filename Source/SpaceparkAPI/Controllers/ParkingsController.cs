@@ -128,7 +128,7 @@ namespace SpaceparkAPI.Controllers
                 {
                     return NotFound($"We can't find this starship registered under {parkingObj.Traveller}");
                 }
-                else if (result > 15)
+                else if (result > 15) //We check that the spaceship is not longer than 15m
                 {
                     return BadRequest($"Starship too big: {result}, max length = 15m");
                 }
