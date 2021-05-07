@@ -19,5 +19,5 @@
 **May 3 2021**
 
 - Created som new GET/POST methods for our API and also included some conditions inside our API methods in order to make them work properly. 
-- Also included some new methods in form of PUT and DELETE, so that we can update or delete the existing data. We used Linq to select the right object in order to either delete or update the specific data. 
+- Also included some new methods in form of PUT and DELETE, so that we can update or delete the existing data. We used Linq to join the tables and select the right object in order to either delete or update the specific data. 
 - 
