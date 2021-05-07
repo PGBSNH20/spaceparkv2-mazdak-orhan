@@ -177,6 +177,44 @@ namespace SpaceTest
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        [Fact]
+        public async Task When_Ending_Parking_Luke_Skywalker_Expect_TotalSum_For_OneDay_1440()
+        {
+            DbContextOptions<SpaceParkContext> dummyOptions = new DbContextOptionsBuilder<SpaceParkContext>().Options;
+            var myContextMoq = new Mock<SpaceParkContext>(dummyOptions);
+
+            List<Parking> parking = new() { new Parking { Id = 1, Traveller = "luke skywalker", SpacePortId = 1, StarShip = "X-wing", StartTime = DateTime.Now.AddDays(-1)} };
+            List<SpacePort> spaceports = new() { new SpacePort() { Id = 1, Name = "Stephans kakor" } };
+
+            myContextMoq.Setup(x => x.Parkings).ReturnsDbSet(parking);
+            myContextMoq.Setup(x => x.SpacePorts).ReturnsDbSet(spaceports);
+
+
+            var parkingMoq = new ParkingsController(myContextMoq.Object);
+            var result = await parkingMoq.EndParking(traveller: "Luke Skywalker");
+
+            Assert.Equal(14400,Math.Round((decimal)parking[0].TotalSum,0));
+        }
+
+        [Fact]
+        public async Task When_Ending_Parking_Luke_Skywalker_Expect_TotalSum_For_OneHour_600()
+        {
+            DbContextOptions<SpaceParkContext> dummyOptions = new DbContextOptionsBuilder<SpaceParkContext>().Options;
+            var myContextMoq = new Mock<SpaceParkContext>(dummyOptions);
+
+            List<Parking> parking = new() { new Parking { Id = 1, Traveller = "luke skywalker", SpacePortId = 1, StarShip = "X-wing", StartTime = DateTime.Now.AddHours(-1) } };
+            List<SpacePort> spaceports = new() { new SpacePort() { Id = 1, Name = "Stephans kakor" } };
+
+            myContextMoq.Setup(x => x.Parkings).ReturnsDbSet(parking);
+            myContextMoq.Setup(x => x.SpacePorts).ReturnsDbSet(spaceports);
+
+
+            var parkingMoq = new ParkingsController(myContextMoq.Object);
+            var result = await parkingMoq.EndParking(traveller: "Luke Skywalker");
+
+            Assert.Equal(600, Math.Round((decimal)parking[0].TotalSum, 0));
+        }
+
         /// <summary>
         ///  TESTING SPACEPORTCONTROLLER
         /// </summary>
