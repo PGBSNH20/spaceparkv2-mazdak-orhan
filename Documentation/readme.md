@@ -1,7 +1,7 @@
 
 **April 30 2021**
 
-- We started creating our project in Visual Studio
+- We started creating our projects in Visual Studio
 - Started setting up docker compose to out projects
 
 ---
