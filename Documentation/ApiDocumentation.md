@@ -12,4 +12,4 @@
 -  3. If we pass both conditions above then we check if the selected starship the user wants to park is less than 15m (as we only allow starships below 15m to park).
 To get more indepth details you can check ParkingsController.cs file here: [Controller folder (Repo)](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/tree/Dev/Source/SpaceparkAPI/Controllers).
 
-4. Within the Parking API the traveller should also be able to get his current active parkings or Historical parkings by entering his full name into the field. **Important**: When it comes to the Parkings API we always need to provide a ApiKeyUser, for all methods within the Parkings section we will provide user api key which can be found here: [API Keys](Source/SpaceparkAPI/appsettings.json).
+4. Within the Parking API the traveller should also be able to get his current active parking or Historical parkings by entering his full name into the field. **Important**: When it comes to the Parkings API we always need to provide a ApiKeyUser, for all methods within the Parkings section we will provide user api key which can be found here: [API Keys](Source/SpaceparkAPI/appsettings.json).
