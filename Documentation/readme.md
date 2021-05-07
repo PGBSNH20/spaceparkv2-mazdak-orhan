@@ -22,6 +22,8 @@
 **Other tools**
 - Browser, such as Google Chrome to display our API
 
+---
+
 **April 30 2021**
 
 - We started creating our projects in Visual Studio
