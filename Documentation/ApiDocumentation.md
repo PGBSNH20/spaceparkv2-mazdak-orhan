@@ -6,6 +6,18 @@
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/Swagger.png)
 
+---
+
+##IMPORTANT NOTES BEFORE API USAGE
+`Check this file for authentication passwords (User and Admin): [API Keys](Source/SpaceparkAPI/appsettings.json)`
+- The API will only work correctly if you create a Spaceport under the Spaceport section. Otherwise, if we do not do this as a FIRST STEP when using the API, we will get alot of BadRequests or NotFound responses while trying to work with the full API.
+- Start with POSTING a Spaceport.
+![image](Documentation/CreateSpaceport.png)
+- When you have successfully created a spaceport, then it should be posted into the database which we run inside a docker container.
+- Next step is to add a traveller and his/hers spaceship that is less than 15m long
+- At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section.
+---
+
 3. As you can see, we have two different categories: Parkings and Spaceport. Parkings is used for users who wants to park their vehicle at a spaceport. To be able to do that, we will check and make API calls from [Starwars Api](https://swapi.dev/) to check: 
 -  1. If it is a starwars character we are trying to park with
 -  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from StarWars API above)
