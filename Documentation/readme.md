@@ -46,4 +46,4 @@
 - Created som new GET, POST and PUT methods for spaceports and also included some conditions inside our these API methods in order to make them work properly. 
 - Also included a DELETE method, so that we can delete the existing data. 
 -  We used Linq to join the tables and select the right object in order to either delete, update or select the desired data.
--  When a user include, update or delete a desired data the result will afterwards be implemented inside the SQL database and displayed in our API.
+-  When a user include, update or delete a desired data for Spaceport, the result will afterwards be implemented in SQL database and displayed in our API.
