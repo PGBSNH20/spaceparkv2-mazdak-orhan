@@ -29,11 +29,12 @@
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/EndParking.png)
 
-- At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section. Go ahead and test the API.
+- At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section. Go ahead and try the API.
 - **BE AWARE** If you choose to delete a Spaceport, then all historical and active parkings that are connected to that Spaceport will be deleted aswell.
 
 ---
 
+## Other information
 -  API calls are made from [Starwars Api](https://swapi.dev/) whenever we try to POST a Parking. We will check following steps: 
 -  1. If it is a starwars character we are trying to park with
 -  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from Starwars API above)
