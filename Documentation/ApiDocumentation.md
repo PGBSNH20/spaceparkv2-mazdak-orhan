@@ -25,6 +25,10 @@
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/AddParking.png)
 
+- Now lets try to actually END a parking, where the traveller will be charged and a totalsum will be printed to the user. If you want more details of how the End Parking section works check this file (line 148-162): [ParkingsController.cs](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Source/SpaceparkAPI/Controllers/ParkingsController.cs). Anyways, It should look something like this when the user ends a parking:
+
+![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/EndParking.png)
+
 - At this point you are ready to try out the other API calls from both Parkings API section and Spaceport API section. Go ahead and test the API.
 - **BE AWARE** If you choose to delete a Spaceport, then all historical and active parkings that are connected to that Spaceport will be deleted aswell.
 
