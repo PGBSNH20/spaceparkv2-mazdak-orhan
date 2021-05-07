@@ -8,7 +8,7 @@
 
 ---
 
-##IMPORTANT NOTES BEFORE API USAGE
+## IMPORTANT NOTES BEFORE API USAGE
 
 - Check this file for authentication passwords (User and Admin): [API Keys](Source/SpaceparkAPI/appsettings.json)
 - The API will only work correctly if you create a Spaceport under the Spaceport section. Otherwise, if we do not do this as a FIRST STEP when using the API, we will get alot of BadRequests or NotFound responses while trying to work with the full API.
