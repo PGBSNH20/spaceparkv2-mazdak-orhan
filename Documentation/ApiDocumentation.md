@@ -6,3 +6,8 @@
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/Swagger.png)
 
+3. As you can see, we have two different categories: Parkings and Spaceport. Parkings is used for users who wants to park their vehicle at a spaceport. To be able to do that, we will check and make API calls from [Starwars Api](https://swapi.dev/) to check: 
+-  1. If it is a starwars character we are trying to park with
+-  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from StarWars API above)
+-  3. If we pass both conditions above then we check if the selected starship the user wants to park is less than 15m (as we only allow starships below 15m to park).
+To get more indepth details you can check ParkingsController.cs file here: [Controller folder (Repo)](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/tree/Dev/Source/SpaceparkAPI/Controllers).
