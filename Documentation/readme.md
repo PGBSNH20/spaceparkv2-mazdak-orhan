@@ -77,5 +77,6 @@
 
 **May 7, 2021**
 - Added 2 more tests where we check that the totalsum for a ended parking is correct.
+- Also added a API Documentation for API Usage, you can find the link here: [API Documentation](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/ApiDocumentation.md)
 
 
