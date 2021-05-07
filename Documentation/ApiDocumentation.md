@@ -17,7 +17,7 @@
 
 ## API USAGE
 
-- Start with POSTING a Spaceport.
+- Start with POSTING a Spaceport, you will need to enter a name (that's it).
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/CreateSpaceport.png)
 
