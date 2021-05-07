@@ -76,7 +76,6 @@
 ---
 
 **May 7, 2021**
-
--Added 2 more tests where we check that the totalsum for a ended parking is correct.
+- Added 2 more tests where we check that the totalsum for a ended parking is correct.
 
 
