@@ -26,14 +26,14 @@
 
 ---
 
-**April 30 - 2021**
+**April 30, 2021**
 
 - We started creating our projects in Visual Studio
 - Started setting up docker compose to out projects
 
 ---
 
-**May 2 - 2021**
+**May 2, 2021**
 
 - Created some objects such as Person, Starship etc. Also created two tables (Parkings and Spaceports) using EntityFrameworkCore with code first convension. 
 - Included two controllers (Parkingscontroller and SpaceportController). Each controller represents functionalities a Spacepark really need. Such as adding, deleting or getting history from that specific spaceport or parking.  
@@ -44,7 +44,7 @@
 
 ---
 
-**May 3 - 2021**
+**May 3, 2021**
 
 - Created some new GET, POST and PUT methods for spaceports and also included some conditions inside  these API methods in order to make them work properly. 
 - Started with DELETE method for deleting parking so that unnessary data can be deleted from the existing data. 
@@ -54,7 +54,7 @@
 
 ---
 
-**May 4 - 2021**
+**May 4, 2021**
 
 - Created GetTravellerHistoricalParking(string traveller) API method which basically gives information about different Starwars characters who have ended there parking. 
 - Besides that we also created etParkingHistoryInSpaceport(int spaceportId) to see all ended parkings in desired spaceport. 
