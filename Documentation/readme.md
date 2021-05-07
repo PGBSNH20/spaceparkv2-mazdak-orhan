@@ -60,3 +60,23 @@
 - Besides that we also created etParkingHistoryInSpaceport(int spaceportId) to see all ended parkings in desired spaceport. 
 - To see active parkings two methods was created, one was GetTravellerActiveParking(string traveller) to see if that person has an active parking or not. And the second method was GetActiveParkingsInSpacePort(int spaceportId) to see all the active parkings in desired spaceport.
 - We looked through our methods to see if we could make our methods asynchronous, which we did in most of our methods.
+
+---
+
+**May 5, 2021**
+- Added authentication to our API, where the users need to provide one userApiKey and the admins need to provide adminApiKey. Added middleware to check if the user have provided any key at all, if yes, then we will go through our attribute authentication which will check if the correct ApiKey has been provided (for Parkings there should be userApiKey provided, and for Spaceports there should be adminApiKey provided). If either Middleware or Attribute check would fail then the API will return a BadRequest.
+- Added headers section to Swagger where we can take input (in the form of a string "ApiKey).
+
+---
+
+**May 6, 2021**
+- Added Mock (Moq) extension to create "copies" of our database for unit testing.
+- Added multiple tests (24 to be exact), where we check each API call method. We make 2 tests for each method where we expect 1. Ok responses from the API and 2. BadRequest/NotFound responses.
+
+---
+
+**May 7, 2021**
+- Added 2 more tests where we check that the totalsum for a ended parking is correct.
+- Also added a API Documentation for API Usage, you can find the link here: [API Documentation](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/ApiDocumentation.md)
+
+
