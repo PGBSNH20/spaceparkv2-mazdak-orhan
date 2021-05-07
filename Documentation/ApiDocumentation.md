@@ -12,6 +12,11 @@
 
 - Check this file for authentication passwords (User and Admin): [API Keys](Source/SpaceparkAPI/appsettings.json)
 - The API will only work correctly if you create a Spaceport under the Spaceport section. Otherwise, if we do not do this as a FIRST STEP when using the API, we will get alot of BadRequests or NotFound responses while trying to work with the full API.
+
+---
+
+## API USAGE
+
 - Start with POSTING a Spaceport.
 
 ![image](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/blob/Dev/Documentation/CreateSpaceport.png)
@@ -40,4 +45,6 @@
 -  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from Starwars API above)
 -  3. If we pass both conditions above then we check if the selected starship the user wants to park is less than 15m (as we only allow starships below 15m to park).
 To get more indepth details you can check ParkingsController.cs file here: [Controller folder (Repo)](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/tree/Dev/Source/SpaceparkAPI/Controllers).
+
+---
 
