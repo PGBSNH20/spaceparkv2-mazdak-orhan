@@ -17,7 +17,7 @@
 - xunit.runner.visualstudio
 
 **Database**
-- MSSQL
+- Microsoft SQL Server Management Studio
 
 **Other tools**
 - Browser, such as Google Chrome to display our API
