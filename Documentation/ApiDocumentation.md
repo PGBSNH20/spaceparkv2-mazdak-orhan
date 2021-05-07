@@ -30,9 +30,9 @@
 
 ---
 
--  API calls are from [Starwars Api](https://swapi.dev/) to check: 
+-  API calls are made from [Starwars Api](https://swapi.dev/) whenever we try to POST a Parking. We will check following steps: 
 -  1. If it is a starwars character we are trying to park with
--  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from StarWars API above)
+-  2. If we pass the 1st condition above, then we check if this character owns a starship (which we also get from Starwars API above)
 -  3. If we pass both conditions above then we check if the selected starship the user wants to park is less than 15m (as we only allow starships below 15m to park).
 To get more indepth details you can check ParkingsController.cs file here: [Controller folder (Repo)](https://github.com/PGBSNH20/spaceparkv2-mazdak-orhan/tree/Dev/Source/SpaceparkAPI/Controllers).
 
