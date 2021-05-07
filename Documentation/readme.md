@@ -56,7 +56,7 @@
 
 **May 4, 2021**
 
-- Created GetTravellerHistoricalParking(string traveller) API method which basically gives information about different Starwars characters who have ended there parking. 
+- Created GetTravellerHistoricalParking(string traveller) API method which basically gives information about different Starwars characters who has ended there parking. 
 - Besides that we also created etParkingHistoryInSpaceport(int spaceportId) to see all ended parkings in desired spaceport. 
 - To see active parkings two methods was created, one was GetTravellerActiveParking(string traveller) to see if that person has an active parking or not. And the second method was GetActiveParkingsInSpacePort(int spaceportId) to see all the active parkings in desired spaceport.
 - We looked through our methods to see if we could make our methods asynchronous, which we did in most of our methods.
