@@ -1,4 +1,4 @@
-***Some tools that we used for this project***
+***Some tools which we used for this project***
 
 **NuGet packages**
 - coverlet.collector
