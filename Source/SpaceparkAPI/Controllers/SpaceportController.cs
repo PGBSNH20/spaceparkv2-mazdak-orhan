@@ -154,15 +154,12 @@ namespace SpaceparkAPI.Controllers
             {
                 return NotFound("We cannot find any parking matching this ID.");
             }
-            else
-            {
-                _dbContext.SpacePorts.Remove(spaceport);
-                await _dbContext.SaveChangesAsync();
-                return Ok("Spaceport deleted with all its historical and active parkings.");
-            }
+            _dbContext.SpacePorts.Remove(spaceport);
+            await _dbContext.SaveChangesAsync();
+            return Ok($"'{spaceport.Name}' Spaceport deleted with all its historical and active parkings.");
         }
 
-        [HttpDelete("[action]")]
+        [HttpDelete("[action]/{ParkingID}")]
         public async Task<IActionResult> DeleteParking(int id)
         {
             var parking = await _dbContext.Parkings.Where(x => x.Id == id).FirstOrDefaultAsync();

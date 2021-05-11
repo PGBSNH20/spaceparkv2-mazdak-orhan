@@ -64,7 +64,7 @@ namespace SpaceparkAPI.Controllers
                            };
             var ongoingParking = parkings.Where(x => x.Traveller == traveller.ToLower());
 
-            if(ongoingParking == null || ongoingParking.Count() == 0)
+            if(!ongoingParking.Any())
             {
                 return NotFound($"We can't find any active parkings for {traveller.ToLower()}");
             }
@@ -77,7 +77,7 @@ namespace SpaceparkAPI.Controllers
             //Added this line to Parse double values to not mix "." and ","
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-            if(_dbContext.SpacePorts == null || _dbContext.SpacePorts.Count() == 0)
+            if(!_dbContext.SpacePorts.Any())
             {
                 return BadRequest("There is no active spaceports to add a parking");
             }
